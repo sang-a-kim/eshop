@@ -13,6 +13,11 @@ const categorySchema = new Schema({
   }
 });
 
+categorySchema.virtual("id").get(function () {
+	return this._id.toHexString();
+});
+categorySchema.set("toJson", { virtuals: true });
+
 const Category = mongoose.model("Category", categorySchema);
 
 export default Category;
