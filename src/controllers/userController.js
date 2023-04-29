@@ -13,6 +13,19 @@ export const getAllUserList = async (req, res) => {
 	res.send(userList);
 };
 
+export const getUser = async (req, res) => {
+	try {
+		const { id } = req.params;
+		const user = await User.findById(id);
+		res.send(user);
+	} catch (e) {
+		res.status(500).json({
+			error: e,
+			success: false,
+		});
+	}
+};
+
 export const addUser = async (req, res) => {
 	const saltRounds = 10;
 	const {
