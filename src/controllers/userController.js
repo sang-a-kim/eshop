@@ -2,7 +2,7 @@ import User from "../models/user.js";
 import bcrypt from "bcrypt";
 
 export const getAllUserList = async (req, res) => {
-	const userList = await User.find({});
+	const userList = await User.find({}).select("name phone email");
 
 	if (!userList) {
 		res.status(500).json({
@@ -16,7 +16,7 @@ export const getAllUserList = async (req, res) => {
 export const getUser = async (req, res) => {
 	try {
 		const { id } = req.params;
-		const user = await User.findById(id);
+		const user = await User.findById(id).select("-passwordHash");
 		res.send(user);
 	} catch (e) {
 		res.status(500).json({
