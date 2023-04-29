@@ -67,3 +67,18 @@ export const addUser = async (req, res) => {
 		});
 	}
 };
+
+export const login = async (req, res) => {
+	const { email, password } = req.body;
+	const user = await User.findOne({ email });
+
+  if (!user) {
+    res.status(404).send("User cannot be found")
+  }
+
+	if (bcrypt.compareSync(password, user.passwordHash)) {
+		res.status(200).send(user);
+	} else {
+    res.status(404).send("Wrong password")
+  }
+};
